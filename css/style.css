@@ -15,6 +15,8 @@
     --background-banner-color: #2F303A;
     --background-footer-color: #2F303A;
     --border-header: #ECECEC;
+    --function-time: cubic-bezier(0.4, 0, 0.2, 1);
+    --time: 250ms;
 }
 
 body {
@@ -81,10 +83,13 @@ ul {
     padding-right: 93px;
     padding-top: 24px;
     padding-bottom: 24px;
+
+    transition: color var(--time) var(--function-time);
 }
 
 .logo-header {
     color: var(--secondary-logo-color);
+    transition: color var(--time) var(--function-time);
 }
 
 .logo:hover,
@@ -101,6 +106,7 @@ ul {
     margin-right: auto;
 }
 .list-item {
+    position: relative;
     font-weight: 500;
     line-height: calc(16 / 14);
     letter-spacing: 0.02em;
@@ -124,8 +130,10 @@ ul {
 }
 .nav-link {
     color: var(--main-title-color);
+
+    transition: color var(--time) var(--function-time);
 }
-.nav-list .current {
+.nav-list.current {
     color: var(--header-color-hover);
 }
 
@@ -134,13 +142,32 @@ ul {
     color: var(--header-color-hover);
 }
 
+.nav-link.current::after { 
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+
+    transform: translateX(-50%);
+
+    display: block;
+    width: 100%;
+    height: 4px;
+
+    border-radius: 2px;
+    background-color: var(--btn-color);
+    
+}
+
 /*контакти*/
 .header-list {
     margin-left: auto;
 }
 
 .header-contact {
-    color: var(--header-inform-color);  
+    color: var(--header-inform-color); 
+    
+    transition: color var(--time) var(--function-time);
 }
 
 .header-contact:hover,
@@ -199,6 +226,8 @@ ul {
     min-width: 216px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
+
+    transition: background-color var(--time) var(--function-time);
 }
 
 .banner-btn:hover,
@@ -276,6 +305,7 @@ ul {
     display: flex;
 }
 .work-item {
+    position: relative;
     margin-right: 30px;
 }
 .work-item:last-child {
@@ -283,8 +313,29 @@ ul {
 }
 .work-card {
     display: block;
+    max-width: 100%;
+    height: auto;
 }
+.work-desc {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    height: 70px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    font-weight: 700;
+    line-height: calc(16 / 14);
+    text-align: center;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+
+    color: var(--background-color);
+    background: rgba(47, 48, 58, 0.8);
+}
 /*  Наша команда */
 
 .team {
@@ -358,6 +409,8 @@ ul {
     background-color: rgba(255, 255, 255, 0.1);
     margin-bottom: 0;
     color: rgba(175, 177, 184, 1);
+
+    transition: color var(--time) var(--function-time), background-color var(--time) var(--function-time);
 }
 
 .socials-link:hover, .socials-link:focus {
@@ -398,14 +451,19 @@ ul {
     border-radius: 4px;
 
     color: rgba(175, 177, 184, 1);
+
+    transition: color var(--time) var(--function-time), border var(--time) var(--function-time);
 }
 .clients-icon {
     fill: currentColor;
+
+    transition: fill var(--time) var(--function-time);
 }
 .clients-link:hover, .clients-link:focus {
     border: 1px solid var(--header-color-hover);
-    border-radius: 4px;
+    
     color: var(--header-color-hover);
+
 }
 
 .clients-icon:hover, .clients-icon:focus {
@@ -438,6 +496,8 @@ ul {
     line-height: calc(31 / 26);
     color: var(--first-logo-color);
     text-decoration: none;
+
+    transition: color var(--time) var(--function-time);
 }
 .contact-second-logo {
     color: var(--footer-inform-color);
@@ -454,6 +514,8 @@ ul {
     color: var(--footer-inform-color);
     text-decoration: none;
     color: rgba(255, 255, 255, 0.6);
+
+    transition: color var(--time) var(--function-time);
 }
 .contact-item:hover, .contact-item:focus {
     color: var(--header-color-hover);
@@ -463,6 +525,8 @@ ul {
     line-height: calc(24 / 14);
     color: var(--footer-inform-color);
     text-decoration: none;
+
+    transition: color var(--time) var(--function-time);
 }
 .contact-item-adr:hover, .contact-item-adr:focus {
     color: var(--header-color-hover);
@@ -514,6 +578,64 @@ ul {
 
 /*-------------FOOTER---------------*/
 
+/*-------------MODAL WINDOW---------------*/
+.backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: auto;
+    right: auto;
+    top: 0px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity var(--time) var(--function-time), visibility var(--time) var(--function-time);
+}
+.backdrop.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 528px;
+    min-height: 581px;
+    
+    transform: translate(-50%, -50%);
+
+    background: var(--background-color);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+
+    transition: transform var(--time) var(--function-time), opacity var(--time) var(--function-time);
+}
+
+.backdrop.is-hidden .modal {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.modal-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+.modal-icon {
+    
+}
+/*-------------MODAL WINDOW---------------*/
 
 /*------------PORTFOLIO-------------*/
 /*------ФІЛЬТРИ-------------*/
@@ -535,11 +657,11 @@ ul {
     min-width: 73px;
     display: inline-block;
     padding: 6px 25px 6px 25px;
+    border-radius: 4px;
+
+    transition: color var(--time) var(--function-time), background-color var(--time) var(--function-time);
 }
 
-/*.filter-total-btn:hover, .filter-total-btn:focus{
-    color: var(--btn-color-hover);
-}*/
 
 .filter-btn {
     padding: 6px 22px 6px 22px;
@@ -549,14 +671,14 @@ ul {
     color: var(--banner-text-color);
     background-color: var(--btn-color-hover);
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
+    
 }
 .filter-btn:hover,
 .filter-btn:focus {
     color: var(--banner-text-color);
     background-color: var(--btn-color-hover);
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
+    
 }
 
 .filter-item {
@@ -577,6 +699,8 @@ ul {
 .portfolio-link {
     display: block;
     text-decoration: none;
+
+    transition: color var(--time) var(--function-time);
 }
 .portfolio-card {
     display: block;
@@ -623,5 +747,36 @@ ul {
 
 .portfolio-link:hover, .portfolio-link:focus{
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+.portfolio-inf {
+    position: relative;
+    width: 370px;
+    height: 294px;
+    overflow: hidden;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 63px 24px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(33, 150, 243, 0.9);
+
+    font-size: 18px;
+    line-height: calc(28 / 18);
+    letter-spacing: 0.03em;
+
+    color: var(--background-color);
+
+    transform: translateY(100%);
+    transition: transform var(--time) var(--function-time);
+
+}
+.portfolio-link:hover .overlay {
+    transform: translateY(0);
 }
 /*------ПРОЕКТИ-------------*/
